@@ -1,44 +1,57 @@
 var currentLevel;
+var drawPacman;
+var xPos = 25;
+var yPos = 25;
+
+
+
+function move(e){
+     //alert(e.keyCode);
+    if(e.keyCode==39){
+        xPos+=5;
+    }
+    if (e.keyCode==37){
+        xPos-=5;
+    }
+    if(e.keyCode==38){
+        yPos-=5;
+    }
+    if (e.keyCode==40){
+        yPos+=5;
+    }
+    setupCanvas.width=setupCanvas.width;
+    ellipse(xPos,yPos,50,50);
+}
+document.onkeydown = move;
+
+
+
+
 
 function setup() {
     console.log('setup');
     createCanvas(1195, 725);
-
-setupCanvas()
+    setupCanvas()
     currentLevel = 0; //start at level one
     var url = "data/setup.json";
     loadJSON(url, jsonLoaded);
-
-
-
 }
 
 function setupCanvas(){
     background('#222222');
-
-
-    stroke('blue');
-    strokeWeight(20);
-    rect(0, 0, 1200, 4);
-    rect(0, 0, 4, 1200);
-    rect(1190, 0, 1190, 710);
-    rect(0, 720, 1200, 720);
-    //------------>
-
-
-
-
 }
+
+
 
 function draw(){
     setupCanvas();
+    fill('green')
+    ellipse(xPos,yPos,50,50);
     drawSprites();
-    strokeWeight(10);
-    stroke('yellow');
-    ellipse(50,100,25,25);
+
+
 
 }
-
 
 function jsonLoaded(data) {
     console.log('jsonLoaded',data);
@@ -52,9 +65,15 @@ function jsonLoaded(data) {
             fill(data.levels[currentLevel].wallColor);
             rect(0,0, this.wallx, this.wally );
         }
+//    wall.setCollider(rect(0,0, this.wallx, this.wally ));
+
     }
+//this.collider;
+//    this.colliderType = "wall"
 
-
+//this.remove = function() {
+//    this.removed = true;
+//}
 
     var dots = data.levels[currentLevel].dots;
     console.log('dots',dots);
@@ -66,11 +85,6 @@ function jsonLoaded(data) {
         }
     }
 
-
-
-
-    //    walls.push();
-    //    pacman.displace();
-
-
+//    walls.push();
+//    dot.draw.displace();
 }
