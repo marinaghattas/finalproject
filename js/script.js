@@ -63,7 +63,8 @@ function jsonLoaded(data) {
     for (var i = 0; i < dots.length; i++) {
         var dot = createSprite(dots[i][0], dots[i][1], dots[i][2], dots[i][3]);
         collectibles.add(dot);
-         collectibles.draw = function(){
+
+         dot.draw = function(){
             fill(data.levels[currentLevel].dotsColor);
             ellipse(0,0, 10,10);
         }
@@ -91,7 +92,7 @@ function keyPressed() {
   } else if (keyCode == RIGHT_ARROW) {
     pacman.position.x -= 5;
       pacman.setSpeed(2,360);
-      pacman.changeAnimation("RIGHT");
+      pacman.changeAnimation("Left");
       //return false; // prevent default
   }
 }
