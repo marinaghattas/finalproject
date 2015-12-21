@@ -1,30 +1,6 @@
 var currentLevel;
 var pacman;
-//var xPos = 25;
-//var yPos = 25;
-
-
-
-//function move(e){
-//     //alert(e.keyCode);
-//    if(e.keyCode==39){
-//        xPos+=5;
-////        pacman.position.x +=5;
-//    }
-//    if (e.keyCode==37){
-//        xPos-=5;
-//    }
-//    if(e.keyCode==38){
-//        yPos-=5;
-//    }
-//    if (e.keyCode==40){
-//        yPos+=5;
-//    }
-   // setupCanvas.width=setupCanvas.width;}
-
-
-//document.onkeydown = move;
-
+var collectibles;
 
 
 
@@ -35,6 +11,10 @@ function setup() {
 
     pacman = createSprite(1150,50,0,0);
     pacman.addAnimation("still", "images/pacman1.png","images/pacman2.png");
+
+    //create two groups
+    obstacles = new Group();
+    collectibles = new Group();
 
     setupCanvas()
     currentLevel = 0; //start at level one
@@ -52,9 +32,11 @@ function setupCanvas(){
 function draw(){
     setupCanvas();
     fill('green')
-    //ellipse(xPos,yPos,50,50);
+    ;
     drawSprites();
 
+    pacman.collide(obstacles)
+    pacman.overlap(collectibles, collect)
 
 }
 
@@ -64,34 +46,30 @@ function jsonLoaded(data) {
     console.log('walls',walls);
     for (var i = 0; i < walls.length; i++) {
         var wall = createSprite(walls[i][0], walls[i][1], walls[i][2], walls[i][3]);
+        obstacles.add(wall);
+
         wall.wallx = walls[i][2];
         wall.wally = walls[i][3];
         wall.draw = function(){
             fill(data.levels[currentLevel].wallColor);
             rect(0,0, this.wallx, this.wally );
         }
-//    wall.setCollider(rect(0,0, this.wallx, this.wally ));
 
     }
-//this.collider;
-//    this.colliderType = "wall"
 
-//this.remove = function() {
-//    this.removed = true;
-//}
 
     var dots = data.levels[currentLevel].dots;
     console.log('dots',dots);
     for (var i = 0; i < dots.length; i++) {
         var dot = createSprite(dots[i][0], dots[i][1], dots[i][2], dots[i][3]);
-         dot.draw = function(){
+        collectibles.add(dot);
+         collectibles.draw = function(){
             fill(data.levels[currentLevel].dotsColor);
             ellipse(0,0, 10,10);
         }
     }
 
-//    walls.push();
-//    dot.draw.displace();
+
 }
 
 
@@ -117,17 +95,10 @@ function keyPressed() {
       //return false; // prevent default
   }
 }
- // return false; // prevent default
-//    function keyPressed() {
-//    if (keyCode == RIGHT_ARROW) {
-////    circle.position.y -= 5;
-//      pacman.setSpeed(5,270);
-//      pacman.changeAnimation("still");
-//  } else if (keyCode == LEFT_ARROW) {
-//    pacman.position.x += 5;
-//      pacman.setSpeed(5,90);
-//      pacman.changeAnimation("left");
-//  }
-//  return false; // prevent default
-//}
+
+function collect(collector, collected)
+{
+
+  collected.remove();
+}
 
