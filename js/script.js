@@ -30,11 +30,11 @@ var pacman;
 
 
 function setup() {
-    console.log('setup');
+   // console.log('setup');
     createCanvas(1195, 725);
 
     pacman = createSprite(1150,50,0,0);
-    pacman.addAnimation("still", "images/pacman3.png","images/pacman4.png");
+    pacman.addAnimation("still", "images/pacman1.png","images/pacman2.png");
 
     setupCanvas()
     currentLevel = 0; //start at level one
