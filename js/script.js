@@ -1,28 +1,29 @@
 var currentLevel;
-var drawPacman;
-var xPos = 25;
-var yPos = 25;
+var pacman;
+//var xPos = 25;
+//var yPos = 25;
 
 
 
-function move(e){
-     //alert(e.keyCode);
-    if(e.keyCode==39){
-        xPos+=5;
-    }
-    if (e.keyCode==37){
-        xPos-=5;
-    }
-    if(e.keyCode==38){
-        yPos-=5;
-    }
-    if (e.keyCode==40){
-        yPos+=5;
-    }
-    setupCanvas.width=setupCanvas.width;
-    ellipse(xPos,yPos,50,50);
-}
-document.onkeydown = move;
+//function move(e){
+//     //alert(e.keyCode);
+//    if(e.keyCode==39){
+//        xPos+=5;
+////        pacman.position.x +=5;
+//    }
+//    if (e.keyCode==37){
+//        xPos-=5;
+//    }
+//    if(e.keyCode==38){
+//        yPos-=5;
+//    }
+//    if (e.keyCode==40){
+//        yPos+=5;
+//    }
+   // setupCanvas.width=setupCanvas.width;}
+
+
+//document.onkeydown = move;
 
 
 
@@ -31,10 +32,15 @@ document.onkeydown = move;
 function setup() {
     console.log('setup');
     createCanvas(1195, 725);
+
+    pacman = createSprite(1150,50,0,0);
+    pacman.addAnimation("still", "images/pacman3.png","images/pacman4.png");
+
     setupCanvas()
     currentLevel = 0; //start at level one
     var url = "data/setup.json";
     loadJSON(url, jsonLoaded);
+
 }
 
 function setupCanvas(){
@@ -46,9 +52,8 @@ function setupCanvas(){
 function draw(){
     setupCanvas();
     fill('green')
-    ellipse(xPos,yPos,50,50);
+    //ellipse(xPos,yPos,50,50);
     drawSprites();
-
 
 
 }
@@ -88,3 +93,41 @@ function jsonLoaded(data) {
 //    walls.push();
 //    dot.draw.displace();
 }
+
+
+
+function keyPressed() {
+  if (keyCode == UP_ARROW) {
+//    circle.position.y -= 5;
+      pacman.setSpeed(2,270);
+      pacman.changeAnimation("still");
+  } else if (keyCode == DOWN_ARROW) {
+    pacman.position.y += 5;
+      pacman.setSpeed(2,90);
+      pacman.changeAnimation("down");
+  }
+    if (keyCode == LEFT_ARROW) {
+//    circle.position.y -= 5;
+      pacman.setSpeed(2,180);
+      pacman.changeAnimation("still");
+  } else if (keyCode == RIGHT_ARROW) {
+    pacman.position.x -= 5;
+      pacman.setSpeed(2,360);
+      pacman.changeAnimation("RIGHT");
+      //return false; // prevent default
+  }
+}
+ // return false; // prevent default
+//    function keyPressed() {
+//    if (keyCode == RIGHT_ARROW) {
+////    circle.position.y -= 5;
+//      pacman.setSpeed(5,270);
+//      pacman.changeAnimation("still");
+//  } else if (keyCode == LEFT_ARROW) {
+//    pacman.position.x += 5;
+//      pacman.setSpeed(5,90);
+//      pacman.changeAnimation("left");
+//  }
+//  return false; // prevent default
+//}
+
